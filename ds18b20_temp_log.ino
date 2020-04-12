@@ -1,5 +1,14 @@
-
-//DS18B20 
+//DS18B20_TEMP_LOG
+/*
+ * Author: Hunter Gleason
+ * Date: Apr 12, 2020
+ * Function: Uses the OneWire and DallasTemperature libraries to read DS18B20 temperature output in series.
+ * Typically, the sensors are evenly spaced vertically along a post to determine depth of snow.
+ * Temperature data is logged to a SD card, with timestamp from the PCF8523 real time clock.
+ * The script was tested on a Adafruit Feather 32u4 board, equipped with the Adalogger FeatherWing shield.
+ * To conserve power, the Adafruit_SleepyDog library is used to put the logger into low power mode
+ * intermittently between readings. 
+ */ 
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <SPI.h>
@@ -27,7 +36,7 @@ const String filename = "LogFile.txt";
 
 const int n = 3;
 
-const int log_interval=900;
+const int log_interval=15;
 
 long log_time=0;
 
@@ -55,14 +64,15 @@ void setup() {
 
   log_time=now.unixtime()+log_interval;
 
+  sensors.begin();
+  sensors.setResolution(Thermometer1,12);
+  sensors.setResolution(Thermometer2,12);
+  sensors.setResolution(Thermometer3,12);
+  sensors.setResolution(Thermometer4,12);
+
 }
 
 void loop() {
-
-  digitalWrite(LED_BUILTIN, HIGH);
-  if (!rtc.begin()) {
-    delay(5);
-  }
   
   DateTime now = rtc.now();
   long current_time=now.unixtime();
@@ -96,22 +106,10 @@ float avTemp(int n, DeviceAddress therm){
 
 void logtemp()
 {
-  sensors.begin();
-  
-  while(!SD.begin(chipSelect)) 
-  {
-    //don't do anything more:
-    delay(5);
-  }
 
   File dataFile = SD.open(filename, FILE_WRITE);
 
   DateTime now = rtc.now();
-  
-  sensors.setResolution(Thermometer1,12);
-  sensors.setResolution(Thermometer2,12);
-  sensors.setResolution(Thermometer3,12);
-  sensors.setResolution(Thermometer4,12);
 
   sensors.requestTemperatures();
 
