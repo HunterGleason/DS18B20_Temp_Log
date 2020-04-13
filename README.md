@@ -44,7 +44,7 @@ Once the script has been put into the users local sketch book, the sketch can be
 
 ## Deployment
 
-This set up was tested on a [Adafruit 32u4](https://learn.adafruit.com/adafruit-feather-32u4-basic-proto) with the [Adalogger Featherwing](https://learn.adafruit.com/adafruit-adalogger-featherwing/overview) shield. Temperature readings are made using the [DS18B20](https://datasheets.maximintegrated.com/en/ds/DS18B20.pdf) sensors in series. See attached Fritzing diagram for hardware configuration.
+This set up was tested on a [Adafruit 32u4](https://learn.adafruit.com/adafruit-feather-32u4-basic-proto) with the [Adalogger Featherwing](https://learn.adafruit.com/adafruit-adalogger-featherwing/overview) shield. Temperature readings are made using the [DS18B20](https://datasheets.maximintegrated.com/en/ds/DS18B20.pdf) sensors in series. See attached Fritzing diagram (FRITZ.png) for hardware configuration.
 
 ## Built With
 
